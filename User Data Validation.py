@@ -49,15 +49,14 @@ while True:
             password_check = False;
         
         else: 
-
-            ('''
+            print('''
 You may enter your preferred password. Ensure it is at least 7 characters long, at least.''')                    
                                                             
             user_password = input("Enter your preferred Password: ")
         
             password_len = True
         
-            while password_len :
+            while True:
                     
                 if  len(user_password) >= 7: 
 
