@@ -1,5 +1,7 @@
 import string
 import random
+
+
 def get_user_info():
     
     first_name = input("Enter First Name: ")
