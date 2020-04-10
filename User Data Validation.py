@@ -62,7 +62,8 @@ new_user_query = input("Response: ").lower()
 
 if new_user_query == "no":
    is_user_validation = False
-   print("Here are all user(s) details")
+   print(
+'''Here are all registered user(s) details''')
    for user, details in database.items():
         print("\nUser:", user)
         for key in details:
