@@ -2,87 +2,75 @@ import string
 import random
 
 
-def get_user_info():
+first_name = input("Enter First Name: ")
+last_name = input("Enter Last Name: ")
+email = input("Enter Email: ")   
+
+user_details = {
+    "First Name": first_name, 
+    "Last Name": last_name, 
+    "Email": email}
+
+#random password generation
+list1 = [first_name]
+list2 = [last_name]
+random_string_length = 5
+random.choice(string.ascii_lowercase)
+random_string = "".join(random.choice(string.ascii_lowercase) for i in range(random_string_length))
+gen_password = (first_name[:2] + random_string + last_name[-2:])
+
+
+is_user_validation = True
+
+database = {}
+user = 1
+
+    #user opinion on password check
+print("Recommended password is - " + gen_password + '''. 
+Would you like to use this as your password? 
+If so, respond with a "Yes". If not respond with a "No"''')
+answer = input("Response: ").lower()
+
+if answer == "yes":
+    print("Your registration was successful.")
+
+    #adding recommended password to user's details
+    if "Password" not in user_details.keys():
+        user_details["Password"] = gen_password
+        database[user] = user_details
     
-    first_name = input("Enter First Name: ")
-    last_name = input("Enter Last Name: ")
-    email = input("Enter Email: ")
-    info = [first_name, last_name, email]
-    
-    return info
-
-def password_gen(info):
-
-    random_len = 5
-    random.choice(string.ascii_lowercase)
-    random_string_gen = "".join(random.choice(string.ascii_lowercase) for i in range(random_len))
-    recommended_password = (info[0][:2] + random_string_gen + info[1][-2:])
-
-    return recommended_password
-           
-
-user_reg = True
-
-#creating "container" to hold all users' details
-data_bank = []
-
-while True:
-
-
-    info = get_user_info()
-
-    recommended_password = password_gen(info)
-    
-    #User satisfaction with generated password check                                     
-    print("Recommended Password is - " + recommended_password)
-
-    response = input('''Respond with a "Yes" if Recommended Password is OK. If not, respond with a "No" Response: ''')
-
-    password_check = True
-    
-    while True:
-    
-        if response == "yes" or "Yes" or "YES":
-            
-            #adding password to user's information
-            info.append(recommended_password)
-            data_bank.append(info)
-
-            password_check = False;
-        
-        else: 
-            print('''
-You may enter your preferred password. Ensure it is at least 7 characters long, at least.''')                    
-                                                            
-            user_password = input("Enter your preferred Password: ")
-        
-            password_len = True
-        
-            while True:
-                    
-                if  len(user_password) >= 7: 
-
-                    #adding preferred password to user's info
-                    info.append(recommended_password)
-                    data_bank.append(info)
-
-                    password_len = False
-
-                    password_check = False 
-                
-                else:
-                    print("Entry error! The password entered has less than 7 characters.")
-                    user_password = input("Re-enter Password with has at least 7 characters: ")
-
-
-new_user_query = input('''Would you like to register another user? Respond with a "Yes or "No": ''')
-
-if new_user_query == "no" or "No" or "NO":
-    
-    user_reg = False
-    for item in data_bank:
-        print(item)
-        
 else:
-    user_reg = True
-    
+    print('''
+You can enter your preferred password below. 
+NOTE: Password must be at least 7 characters long.''')
+    user_password = input("Enter your preferred password: ")
+    while len(user_password) < 7:
+        print("Entry error! Password has less than 7 characters.")
+        user_password = input("Re-enter password: ")
+    else:
+        print("Password has been registered")
+
+        #adding user preferred password to user's details
+        if "Password" not in user_details.keys(): 
+            user_details["Password"] = user_password
+            database[user] = user_details
+                
+print('''
+Would you like to register another user? Respond with a "Yes" or "No" below''')
+
+new_user_query = input("Response: ").lower()
+
+if new_user_query == "no":
+   is_user_validation = False
+   print("Here are all user(s) details")
+   for user, details in database.items():
+        print("\nUser:", user)
+        for key in details:
+            print(key + ": " + details[key])
+
+else:
+    while new_user_query == "yes":
+        is_user_validation = True
+        user += 1
+        break
+
