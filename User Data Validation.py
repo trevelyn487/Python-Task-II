@@ -1,12 +1,16 @@
 import string
 import random
 
+
 is_user_validation = True
 
-while True:
+#creating "container" to hold details of all users 
+database = {}
 
-    database = {}
-    user = 1
+#initialising number of users
+user = 1
+
+while True:
 
     first_name = input("Enter First Name: ")
     last_name = input("Enter Last Name: ")
@@ -25,11 +29,10 @@ while True:
     random_string = "".join(random.choice(string.ascii_lowercase) for i in range(random_string_length))
     gen_password = (first_name[:2] + random_string + last_name[-2:])
 
-
-    #user opinion on password check
+    #user opinion on generated password check
     print("Recommended password is - " + gen_password + ''' 
 Would you like to use this as your password? 
-If so, respond with a "Yes". If not respond with a "No"''')
+If so, respond with a "Yes". If not, respond with a "No".''')
 
     answer = input("Response: ").lower()
     if answer == "yes":
@@ -39,8 +42,8 @@ If so, respond with a "Yes". If not respond with a "No"''')
         if "Password" not in user_details.keys():
             user_details["Password"] = gen_password
             database[user] = user_details
-
-
+                
+        
     else:
         print('''
 You can enter your preferred password below. 
@@ -55,22 +58,21 @@ NOTE: Password must be at least 7 characters long.''')
             #adding user preferred password to user's details
             if "Password" not in user_details.keys(): 
                 user_details["Password"] = user_password
-                database[user] = user_details
-                    
+                database[user] = user_details               
+                
     print('''
 Would you like to register another user? Respond with a "Yes" or "No" below:''')
 
     new_user_query = input("Response: ").lower()
-
     if new_user_query == "yes":
         user += 1
 
     else:
         is_user_validation = False
         print(
-'''Details of successfully registered user(s) are below:''')
+    '''Here are all user(s) details:''')
         for user, details in database.items():
             print("\nUser:", user)
             for key in details:
-                print(key + ": " + details[key])               
+                print(key + ": " + details[key])
         break
